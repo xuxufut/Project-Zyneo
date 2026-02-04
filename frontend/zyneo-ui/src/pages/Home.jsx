@@ -188,6 +188,7 @@ export default function Home() {
                   ? "bg-blue-700 text-white"
                   : "bg-blue-600 text-white hover:bg-blue-700"
               }`}
+              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
             >
               Buat Paket Baru
             </button>
