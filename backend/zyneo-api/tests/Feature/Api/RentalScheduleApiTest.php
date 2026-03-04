@@ -1,15 +1,32 @@
 <?php
 
+use App\Models\ApiToken;
 use App\Models\Playstation;
 use App\Models\RentalSchedule;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+function authHeadersForRentalSchedule(): array
+{
+    $user = User::factory()->create();
+    $plainToken = str_repeat((string) random_int(1, 9), 64);
+
+    ApiToken::factory()->create([
+        'user_id' => $user->id,
+        'token' => hash('sha256', $plainToken),
+    ]);
+
+    return [
+        'Authorization' => 'Bearer '.$plainToken,
+    ];
+}
+
 it('can list rental schedules', function () {
     RentalSchedule::factory()->count(2)->create();
 
-    $response = $this->getJson('/api/rental-schedules');
+    $response = $this->getJson('/api/rental-schedules', authHeadersForRentalSchedule());
 
     $response
         ->assertOk()
@@ -33,7 +50,7 @@ it('can create rental schedule', function () {
         'status' => 'pending',
     ];
 
-    $response = $this->postJson('/api/rental-schedules', $payload);
+    $response = $this->postJson('/api/rental-schedules', $payload, authHeadersForRentalSchedule());
 
     $response
         ->assertCreated()
@@ -50,7 +67,7 @@ it('can update rental schedule status', function () {
 
     $response = $this->putJson("/api/rental-schedules/{$schedule->id}", [
         'status' => 'confirmed',
-    ]);
+    ], authHeadersForRentalSchedule());
 
     $response
         ->assertOk()
@@ -65,7 +82,7 @@ it('can update rental schedule status', function () {
 it('can delete rental schedule', function () {
     $schedule = RentalSchedule::factory()->create();
 
-    $response = $this->deleteJson("/api/rental-schedules/{$schedule->id}");
+    $response = $this->deleteJson("/api/rental-schedules/{$schedule->id}", [], authHeadersForRentalSchedule());
 
     $response->assertOk();
 
