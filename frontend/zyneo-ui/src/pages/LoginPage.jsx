@@ -1,7 +1,6 @@
-import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function LoginPage({ isAuthenticated, onLogin }) {
+export default function LoginPage({ onLogin, onGotoRegister }) {
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -9,10 +8,6 @@ export default function LoginPage({ isAuthenticated, onLogin }) {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  if (isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -29,11 +24,11 @@ export default function LoginPage({ isAuthenticated, onLogin }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-sky-50 to-white px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl border border-blue-100">
-        <h1 className="text-2xl font-bold text-slate-900">Login Zyneo</h1>
+    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_40%,_#ffffff_100%)] px-4">
+      <div className="w-full max-w-md rounded-3xl bg-white/90 p-8 shadow-2xl border border-blue-100 backdrop-blur">
+        <h1 className="text-3xl font-extrabold text-slate-900">Login Zyneo</h1>
         <p className="text-sm text-slate-500 mt-1">
-          Login dulu sebelum input data atau melakukan pemesanan.
+          Masuk ke dashboard modern Zyneo untuk mengelola paket dan pemesanan.
         </p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
@@ -43,7 +38,7 @@ export default function LoginPage({ isAuthenticated, onLogin }) {
             value={form.email}
             onChange={event => setForm(prev => ({ ...prev, email: event.target.value }))}
             placeholder="Email"
-            className="w-full rounded-xl border border-blue-100 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-blue-100 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
           <input
             type="password"
@@ -51,7 +46,7 @@ export default function LoginPage({ isAuthenticated, onLogin }) {
             value={form.password}
             onChange={event => setForm(prev => ({ ...prev, password: event.target.value }))}
             placeholder="Password"
-            className="w-full rounded-xl border border-blue-100 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-blue-100 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
 
           {errorMessage && (
@@ -63,7 +58,7 @@ export default function LoginPage({ isAuthenticated, onLogin }) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
+            className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-sky-500 px-4 py-2.5 text-sm font-semibold text-white hover:from-blue-700 hover:to-sky-600 disabled:opacity-60 transition"
           >
             {isLoading ? "Memproses..." : "Login"}
           </button>
@@ -71,9 +66,13 @@ export default function LoginPage({ isAuthenticated, onLogin }) {
 
         <p className="text-sm text-slate-500 mt-5">
           Belum punya akun?{" "}
-          <Link to="/register" className="font-semibold text-blue-600 hover:underline">
+          <button
+            type="button"
+            onClick={onGotoRegister}
+            className="font-semibold text-blue-600 hover:underline"
+          >
             Register di sini
-          </Link>
+          </button>
         </p>
       </div>
     </div>

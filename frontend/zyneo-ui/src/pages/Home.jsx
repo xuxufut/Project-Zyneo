@@ -231,16 +231,16 @@ export default function Home({ user }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-white">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#dbeafe_0%,_#eff6ff_45%,_#ffffff_100%)]">
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
         {toast && (
-          <div className="fixed right-6 top-24 z-50 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+          <div className="fixed right-6 top-24 z-50 rounded-xl bg-gradient-to-r from-blue-600 to-sky-500 px-4 py-2 text-sm font-semibold text-white shadow-2xl">
             {toast}
           </div>
         )}
 
         <header className="space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-1 text-xs font-semibold text-blue-700">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-1 text-xs font-semibold text-blue-700 shadow-sm">
             <span className="h-2 w-2 rounded-full bg-blue-600" />
             Zyneo Rental Dashboard
           </div>
@@ -256,7 +256,7 @@ export default function Home({ user }) {
             <button
               type="button"
               onClick={() => setActiveView("create")}
-              className={`rounded-xl px-4 py-2 text-sm font-semibold shadow-sm transition ${
+              className={`rounded-xl px-4 py-2 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 ${
                 activeView === "create"
                   ? "bg-blue-700 text-white"
                   : "bg-blue-600 text-white hover:bg-blue-700"
@@ -267,10 +267,10 @@ export default function Home({ user }) {
             <button
               type="button"
               onClick={() => setActiveView("schedule")}
-              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 ${
                 activeView === "schedule"
                   ? "border-blue-500 bg-blue-50 text-blue-700"
-                  : "border-blue-200 bg-white text-blue-600 hover:border-blue-300 hover:bg-blue-50"
+                  : "border-blue-200 bg-white text-blue-600 hover:border-blue-300 hover:bg-blue-50/80"
               }`}
             >
               Lihat Jadwal Rental
@@ -278,10 +278,10 @@ export default function Home({ user }) {
             <button
               type="button"
               onClick={() => setActiveView("dashboard")}
-              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+              className={`rounded-xl border px-4 py-2 text-sm font-semibold transition hover:-translate-y-0.5 ${
                 activeView === "dashboard"
                   ? "border-blue-500 bg-blue-50 text-blue-700"
-                  : "border-blue-200 bg-white text-blue-600 hover:border-blue-300 hover:bg-blue-50"
+                  : "border-blue-200 bg-white text-blue-600 hover:border-blue-300 hover:bg-blue-50/80"
               }`}
             >
               Dashboard Utama
@@ -291,7 +291,7 @@ export default function Home({ user }) {
 
         {activeView === "schedule" ? (
           <section className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm p-6 border border-blue-100">
+            <div className="bg-white/90 rounded-3xl shadow-xl p-6 border border-blue-100 backdrop-blur">
               <h2 className="text-xl font-semibold text-slate-900">Tambah Jadwal Rental</h2>
               <form onSubmit={handleScheduleSubmit} className="mt-4 grid gap-3 md:grid-cols-2">
                 <input
@@ -367,7 +367,7 @@ export default function Home({ user }) {
                     <button
                       type="button"
                       onClick={() => toggleScheduleStatus(item.id)}
-                      className="rounded-lg border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-blue-50"
+                      className="rounded-lg border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-blue-50/80"
                     >
                       Ubah Status
                     </button>
@@ -379,22 +379,22 @@ export default function Home({ user }) {
         ) : (
           <>
             <section className="grid gap-4 md:grid-cols-3">
-              <div className="bg-white rounded-2xl shadow-sm p-5 border border-blue-100">
+              <div className="bg-white/90 rounded-3xl shadow-lg p-5 border border-blue-100 backdrop-blur">
                 <p className="text-sm text-slate-500">Total Paket</p>
                 <p className="text-2xl font-semibold text-slate-900">{stats.total}</p>
               </div>
-              <div className="bg-blue-600 rounded-2xl shadow-sm p-5 text-white">
+              <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-3xl shadow-lg p-5 text-white">
                 <p className="text-sm text-blue-100">Tersedia</p>
                 <p className="text-2xl font-semibold">{stats.available}</p>
               </div>
-              <div className="bg-white rounded-2xl shadow-sm p-5 border border-blue-100">
+              <div className="bg-white/90 rounded-3xl shadow-lg p-5 border border-blue-100 backdrop-blur">
                 <p className="text-sm text-slate-500">Sedang Disewa</p>
                 <p className="text-2xl font-semibold text-blue-700">{stats.rented}</p>
               </div>
             </section>
 
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-              <section className="bg-white rounded-2xl shadow-sm p-6 border border-blue-100">
+              <section className="bg-white/90 rounded-3xl shadow-xl p-6 border border-blue-100 backdrop-blur">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <h2 className="text-xl font-semibold text-slate-900">Daftar Paket PlayStation</h2>
                   <div className="flex flex-wrap gap-2">
@@ -406,7 +406,7 @@ export default function Home({ user }) {
                         className={`rounded-full px-4 py-1 text-xs font-semibold transition ${
                           statusFilter === status
                             ? "bg-blue-600 text-white"
-                            : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                            : "bg-blue-50 text-blue-700 hover:bg-blue-100/80"
                         }`}
                       >
                         {status === "all" ? "Semua" : status === "available" ? "Tersedia" : "Disewa"}
@@ -439,7 +439,7 @@ export default function Home({ user }) {
                     </thead>
                     <tbody>
                       {filteredPlaystations.map(ps => (
-                        <tr key={ps.id} className="border-b last:border-b-0 hover:bg-blue-50/40">
+                        <tr key={ps.id} className="border-b last:border-b-0 hover:bg-blue-50/80/40">
                           <td className="py-3 pr-4">
                             <p className="font-semibold text-slate-900">{ps.name}</p>
                             <p className="text-xs text-slate-500">{ps.type} · {ps.version}</p>
@@ -456,14 +456,14 @@ export default function Home({ user }) {
                               <button
                                 type="button"
                                 onClick={() => handleEdit(ps)}
-                                className="px-3 py-1 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-100"
+                                className="px-3 py-1 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-100/80"
                               >
                                 Edit
                               </button>
                               <button
                                 type="button"
                                 onClick={() => handleDelete(ps.id)}
-                                className="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-50 text-slate-600 hover:bg-slate-100"
+                                className="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-50 text-slate-600 hover:bg-slate-100/80"
                               >
                                 Hapus
                               </button>
@@ -476,7 +476,7 @@ export default function Home({ user }) {
                 </div>
               </section>
 
-              <section className="bg-white rounded-2xl shadow-sm p-6 border border-blue-100">
+              <section className="bg-white/90 rounded-3xl shadow-xl p-6 border border-blue-100 backdrop-blur">
                 <h2 className="text-xl font-semibold text-slate-900">
                   {editingId ? "Edit Paket" : "Tambah Paket Baru"}
                 </h2>
@@ -554,7 +554,7 @@ export default function Home({ user }) {
                     <button
                       type="button"
                       onClick={resetPackageForm}
-                      className="px-5 py-2 rounded-xl border border-blue-200 text-sm font-semibold text-blue-600 hover:bg-blue-50"
+                      className="px-5 py-2 rounded-xl border border-blue-200 text-sm font-semibold text-blue-600 hover:bg-blue-50/80"
                     >
                       Reset
                     </button>
