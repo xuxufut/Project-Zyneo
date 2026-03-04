@@ -164,7 +164,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-white">
+    <div className="min-h-screen bg-linear-to-br from-sky-50 via-blue-50 to-white">
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
         <header className="space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-1 text-xs font-semibold text-blue-700">
@@ -188,7 +188,6 @@ export default function Home() {
                   ? "bg-blue-700 text-white"
                   : "bg-blue-600 text-white hover:bg-blue-700"
               }`}
-              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
             >
               Buat Paket Baru
             </button>
