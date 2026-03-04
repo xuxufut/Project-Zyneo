@@ -3,79 +3,49 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePlaystationRequest;
+use App\Http\Requests\UpdatePlaystationRequest;
+use App\Http\Resources\PlaystationResource;
 use App\Models\Playstation;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PlaystationController extends Controller
 {
-    // GET /api/playstations
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        return response()->json([
-            'success' => true,
-            'data' => Playstation::all()
-        ]);
+        $playstations = Playstation::query()->latest()->get();
+
+        return PlaystationResource::collection($playstations);
     }
 
-    // POST /api/playstations
-    public function store(Request $request)
+    public function store(StorePlaystationRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'type' => 'required|string',
-            'price_per_day' => 'required|integer',
-        ]);
+        $playstation = Playstation::query()->create($request->validated());
 
-        $playstation = Playstation::create($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Playstation created',
-            'data' => $playstation
-        ], 201);
+        return (new PlaystationResource($playstation))
+            ->response()
+            ->setStatusCode(201);
     }
 
-    // GET /api/playstations/{id}
-    public function show($id)
+    public function show(Playstation $playstation): PlaystationResource
     {
-        $playstation = Playstation::findOrFail($id);
-
-        return response()->json([
-            'success' => true,
-            'data' => $playstation
-        ]);
+        return new PlaystationResource($playstation);
     }
 
-    // PUT /api/playstations/{id}
-    public function update(Request $request, $id)
+    public function update(UpdatePlaystationRequest $request, Playstation $playstation): PlaystationResource
     {
-        $playstation = Playstation::findOrFail($id);
+        $playstation->update($request->validated());
 
-        $validated = $request->validate([
-            'name' => 'sometimes|string',
-            'type' => 'sometimes|string',
-            'price_per_day' => 'sometimes|integer',
-            'status' => 'sometimes|in:available,rented',
-        ]);
-
-        $playstation->update($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Playstation updated',
-            'data' => $playstation
-        ]);
+        return new PlaystationResource($playstation->fresh());
     }
 
-    // DELETE /api/playstations/{id}
-    public function destroy($id)
+    public function destroy(Playstation $playstation): JsonResponse
     {
-        $playstation = Playstation::findOrFail($id);
         $playstation->delete();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Playstation deleted'
+            'message' => 'Playstation deleted successfully.',
         ]);
     }
 }
