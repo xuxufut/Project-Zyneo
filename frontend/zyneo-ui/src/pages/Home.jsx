@@ -65,7 +65,7 @@ const scheduleFormInitial = {
   time: "",
 };
 
-export default function Home() {
+export default function Home({ user }) {
   const [playstations, setPlaystations] = useState(() => {
     const saved = localStorage.getItem("zyneo-packages");
     return saved ? JSON.parse(saved) : defaultPackages;
@@ -250,6 +250,7 @@ export default function Home() {
           <p className="text-slate-600 max-w-2xl">
             Sekarang dashboard lebih siap digunakan: data paket & jadwal tersimpan di browser,
             form tervalidasi, dan aksi utama lebih jelas.
+            {user ? ` Login sebagai ${user.name}.` : ""}
           </p>
           <div className="flex flex-wrap gap-3">
             <button
