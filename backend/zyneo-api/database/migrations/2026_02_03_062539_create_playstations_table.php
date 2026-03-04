@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-          Schema::create('playstations', function (Blueprint $table) {
-        $table->id();
-        $table->string('name'); // PS 4 / PS 5
-        $table->string('type'); // PS4 / PS5
-        $table->integer('price_per_day');
-        $table->enum('status', ['available', 'rented'])->default('available');
-        $table->timestamps();
+        Schema::create('playstations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('type');
+            $table->string('version');
+            $table->unsignedTinyInteger('controllers')->default(2);
+            $table->unsignedInteger('price_per_day');
+            $table->enum('status', ['available', 'rented'])->default('available');
+            $table->timestamps();
         });
     }
 
